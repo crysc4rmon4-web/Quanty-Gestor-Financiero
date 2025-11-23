@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 
 // IMPORTS (modular)
-// ------------------------------
 import { 
   addTransaction, 
   calculateSavingFromIncome, 
@@ -120,34 +119,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   //--------------------------------------------------------------
-  // INICIALIZAR MODAL PERSONALIZADO DE AHORRO
+  // MODAL INICIAL — SE ABRE AL CARGAR LA APP
+  //--------------------------------------------------------------
+  const modalInicial = document.getElementById("modalAhorroInicial");
+  const cerrarModalInicial = document.getElementById("cerrarModalInicial");
+
+  // Abrir automáticamente al cargar la app
+  window.addEventListener("load", () => {
+    modalInicial.style.display = "flex";
+  });
+
+  // Cerrar modal con botón
+  cerrarModalInicial.addEventListener("click", () => {
+    modalInicial.style.display = "none";
+  });
+
+  // Cerrar modal si el usuario hace click fuera del contenido
+  modalInicial.addEventListener("click", (e) => {
+    if (e.target === modalInicial) {
+      modalInicial.style.display = "none";
+    }
+  });
+
+
+  //--------------------------------------------------------------
+  // INICIALIZAR MODAL PERSONALIZADO DE AHORRO (botón)
   //--------------------------------------------------------------
   initSavingsModal(
     document.getElementById("btnAhorro"),
     document.getElementById("modalAhorroConsejo"),
     document.getElementById("cerrarModal")
   );
-
-  //--------------------------------------------------------------
-  // MODAL INICIAL — SE ABRE AL CARGAR LA APP
-  //--------------------------------------------------------------
-  const modal = document.getElementById('modalAhorroConsejo');
-  const cerrarBtn = document.getElementById('cerrarModal');
-
-  // Abrir automáticamente al cargar la app
-  modal.style.display = 'flex';
-
-  // Cerrar modal con botón
-  cerrarBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-  });
-
-  // Cerrar modal si el usuario hace click fuera del contenido
-  window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-          modal.style.display = 'none';
-      }
-  });
 
 
   //--------------------------------------------------------------

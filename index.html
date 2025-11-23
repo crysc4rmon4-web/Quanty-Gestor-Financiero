@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quanty Gestor Financiero</title>
 
     <!-- BOOTSTRAP CSS -->
@@ -13,22 +13,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- CSS PERSONALIZADO -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body class="bg-dark text-light">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR PRINCIPAL -->
     <nav class="navbar navbar-dark bg-gradient shadow-sm border-bottom border-success border-opacity-50 sticky-top">
         <div class="container text-center py-3">
-            <h1 class="fw-bold mb-0 text-success animate-fade">💠 Quanty</h1>
+            <h1 class="fw-bold mb-0 text-success animate-fade">
+                💠 Quanty
+            </h1>
             <p class="text-secondary fs-5 fw-semibold mt-2 animate-slide">
                 Mide. <span class="text-success">Controla.</span> <span class="text-light">Crece.</span>
             </p>
         </div>
     </nav>
+
 
     <!-- CONTENEDOR PRINCIPAL -->
     <main class="container my-5">
@@ -50,26 +54,24 @@
                     <h3 id="saldo-total" class="fw-bold">€0.00</h3>
                 </div>
             </div>
-
             <div class="col-md-3">
                 <div class="card glass-card border-primary shadow-sm p-3">
                     <h6 class="text-primary">📈 Ingresos</h6>
                     <h3 id="ingresos-total" class="fw-bold">€0.00</h3>
                 </div>
             </div>
-
             <div class="col-md-3">
                 <div class="card glass-card border-danger shadow-sm p-3">
                     <h6 class="text-danger">📉 Gastos</h6>
                     <h3 id="gastos-total" class="fw-bold">€0.00</h3>
                 </div>
             </div>
-
             <div class="col-md-3">
                 <div class="card glass-card border-warning shadow-sm p-3">
                     <h6 class="text-warning">🏦 Ahorro (10%)</h6>
                     <h3 id="ahorro-total" class="fw-bold">€0.00</h3>
 
+                    <!-- Botón -->
                     <button class="btn btn-outline-warning btn-sm mt-2" id="btnAhorro">
                         🐇 Descubre tu 10 %
                     </button>
@@ -84,9 +86,14 @@
                 <button class="btn btn-outline-light btn-sm" data-bs-toggle="collapse" data-bs-target="#tipsAhorro">
                     💡 Consejos rápidos
                 </button>
+                <div class="collapse mt-2" >
+                    <div class="card card-body bg-dark text-light" id="contenidoConsejo">
+                        <!-- Aquí aparecerá el consejo -->
+                    </div>
+                </div>
             </div>
 
-            <div class="collapse show mb-3" id="tipsAhorro">
+            <div class="collapse mb-3" id="tipsAhorro">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     💸 Consejo: destina el 10% de cada ingreso a tu ahorro automático.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
@@ -112,9 +119,8 @@
                     <div class="col-md-3">
                         <label for="monto" class="form-label fw-semibold text-light">Monto</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-success text-light border-0">
-                                <i class="bi bi-cash-stack"></i>
-                            </span>
+                            <span class="input-group-text bg-success text-light border-0"><i
+                                    class="bi bi-cash-stack"></i></span>
                             <input type="number" class="form-control input-dark" id="monto" placeholder="Ej. 150.00"
                                 required>
                         </div>
@@ -150,7 +156,6 @@
                 <h4 class="fw-bold text-light mb-0">📜 Historial de movimientos</h4>
                 <button class="btn btn-outline-info btn-sm">📊 Ver resumen mensual</button>
             </div>
-
             <div class="table-responsive">
                 <table class="table table-dark table-hover align-middle text-center mb-0">
                     <thead class="table-light text-dark">
@@ -188,20 +193,45 @@
         </section>
     </main>
 
-    <!-- MODAL CUSTOM (INICIAL) -->
+    <!-- MODAL AHORRO -->
+    <div class="modal fade" id="modalAhorro" tabindex="-1" aria-labelledby="modalAhorroLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-dark">
+                <div class="modal-header bg-warning bg-opacity-75">
+                    <h5 class="modal-title fw-bold" id="modalAhorroLabel">💡 Activar Ahorro Inteligente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Cada vez que registres un ingreso, el sistema reservará automáticamente el 10% en tu ahorro.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning text-dark">Activar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL boton ahorro -->
     <div id="modalAhorroConsejo" class="modal-consejo">
         <div class="modal-contenido animate-fade">
             <h5 class="text-warning mb-3">💡 Tu Ahorro del 10%</h5>
+
             <p><strong>1️⃣ Ahorra el 10 % de tus ingresos</strong><br>
                 Reservar una pequeña parte de tus ingresos de manera constante es el primer paso hacia la libertad
                 financiera.</p>
+
             <p><strong>2️⃣ La magia del interés compuesto</strong><br>
                 Si mantienes tu ahorro y lo dejas crecer a lo largo del tiempo, el interés compuesto hará que tu dinero
                 aumente significativamente. Pequeñas cantidades constantes generan grandes resultados. 🌱📈</p>
+
             <p><strong>3️⃣ Reinvierte y aprende</strong><br>
                 Solo ahorrar no es suficiente: aprender a reinvertir tu dinero en instrumentos sencillos y seguros, o
                 simular su crecimiento, permite que tu ahorro trabaje para ti. La educación financiera es clave para
                 maximizar el impacto de tu 10 %.</p>
+
             <button class="btn btn-warning btn-sm" id="cerrarModal">Cerrar</button>
         </div>
     </div>
@@ -214,7 +244,8 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="/app.js"></script>
+
+    <script src="app.js"></script>
 </body>
 
-</html>
+</html> 
