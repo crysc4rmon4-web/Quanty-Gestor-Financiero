@@ -1,19 +1,16 @@
-// ==============================
 // charts.js
-// ==============================
-// Este módulo se encarga de inicializar y actualizar los gráficos de balance y ahorro.
-// No toca inputs ni modales, solo Chart.js.
+// --------------------------------------------------
+// Inicializa y actualiza los gráficos Chart.js.
+// No toca inputs ni modales.
+// --------------------------------------------------
 
 export function initBalanceChart(ctx) {
-  // Gradientes
   const gradientIngresos = ctx.createLinearGradient(0, 0, 400, 0);
   gradientIngresos.addColorStop(0, "#00ff99");
   gradientIngresos.addColorStop(1, "#198754");
-
   const gradientGastos = ctx.createLinearGradient(0, 0, 400, 0);
   gradientGastos.addColorStop(0, "#ff5c5c");
   gradientGastos.addColorStop(1, "#dc3545");
-
   const gradientAhorros = ctx.createLinearGradient(0, 0, 400, 0);
   gradientAhorros.addColorStop(0, "#ffd54f");
   gradientAhorros.addColorStop(1, "#ffc107");
@@ -32,12 +29,17 @@ export function initBalanceChart(ctx) {
       }]
     },
     options: {
-      indexAxis: 'y', // barra horizontal
+      indexAxis: 'y',
       responsive: true,
       plugins: {
         legend: { display: false },
         title: { display: true, text: "Balance General", font: { size: 18 }, color: "#00ff99" },
-        tooltip: { enabled: true, callbacks: { label: ctx => `${ctx.dataset.label}: €${ctx.raw}` } }
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: €${ctx.raw}`
+          }
+        }
       },
       scales: {
         x: { beginAtZero: true, ticks: { color: "#fff" }, grid: { color: "rgba(255,255,255,0.1)" } },
@@ -69,7 +71,7 @@ export function initSavingsChart(ctx) {
         tooltip: {
           callbacks: {
             label: (ctx) => {
-              if (ctx.label === "Ahorro") return `Ahorro: €${ctx.raw.toFixed(2)}`;
+              if (ctx.label === "Ahorro") return `Ahorro: €${Number(ctx.raw).toFixed(2)}`;
               return "Restante";
             }
           }
@@ -85,7 +87,8 @@ export function updateBalanceChart(chart, totals) {
 }
 
 export function updateSavingsChart(chart, totals) {
-  const restante = Math.max(totals.ingresos - totals.ahorro, 0);
+  // Restante = ingresos - ahorro automático (informativo)
+  const restante = Math.max(totals.ingresos - (typeof totals.ahorroAutomatico !== "undefined" ? totals.ahorroAutomatico : totals.ahorro), 0);
   chart.data.datasets[0].data = [totals.ahorro, restante];
   chart.update();
 }

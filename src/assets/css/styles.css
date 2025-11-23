@@ -305,6 +305,39 @@ body.bg-dark {
 }
 
 
+/* ==========================
+   MODAL CUSTOM (inicio app)
+   ========================== */
+.modal-consejo {
+  display: none;
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-contenido {
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 400px;
+  text-align: center;
+  border: 2px solid #ffc107;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(-20px) scale(0.95);}
+  to {opacity:1; transform: translateY(0) scale(1);}
+}
+
+
 
 /* 🦶 Footer */
 footer {

@@ -6,23 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quanty Gestor Financiero</title>
 
-    <!-- BOOTSTRAP CSS: estilos base del framework -->
+    <!-- BOOTSTRAP CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- ICONOS BOOTSTRAP: iconos usados en la UI -->
+    <!-- ICONOS BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- CSS PERSONALIZADO: tus estilos (mover a assets/css/styles.css si corresponde) -->
+    <!-- CSS PERSONALIZADO -->
     <link rel="stylesheet" href="assets/css/styles.css">
 
-    <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
 <body class="bg-dark text-light">
 
-    <!-- NAVBAR PRINCIPAL -->
-    <!-- Esto muestra el header fijo con título y slogan -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-gradient shadow-sm border-bottom border-success border-opacity-50 sticky-top">
         <div class="container text-center py-3">
             <h1 class="fw-bold mb-0 text-success animate-fade">💠 Quanty</h1>
@@ -36,7 +34,6 @@
     <main class="container my-5">
 
         <!-- FRASE MOTIVACIONAL -->
-        <!-- Esto muestra una frase aleatoria para motivar al usuario -->
         <section class="text-center mb-4">
             <div class="card glass-card border-0 shadow p-4">
                 <blockquote class="blockquote mb-0 text-info">
@@ -46,7 +43,6 @@
         </section>
 
         <!-- RESUMEN FINANCIERO -->
-        <!-- Tarjetas con saldo, ingresos, gastos y ahorro (actualizadas por JS) -->
         <section class="row g-3 text-center mb-5 resumen-financiero">
             <div class="col-md-3">
                 <div class="card glass-card border-success shadow-sm p-3">
@@ -74,7 +70,6 @@
                     <h6 class="text-warning">🏦 Ahorro (10%)</h6>
                     <h3 id="ahorro-total" class="fw-bold">€0.00</h3>
 
-                    <!-- Botón que abre el modal custom (manejador en app.js) -->
                     <button class="btn btn-outline-warning btn-sm mt-2" id="btnAhorro">
                         🐇 Descubre tu 10 %
                     </button>
@@ -83,43 +78,29 @@
         </section>
 
         <!-- FORMULARIO DE TRANSACCIONES -->
-        <!-- Formulario principal: captura descripción, divisa, monto y tipo -->
         <section class="card glass-card border-0 shadow p-4 mb-5 form-transacciones">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="mb-0 text-success fw-bold">Avancemos juntos con tus finanzas 🌱 </h4>
-
-                <!-- Botón que abre el collapse de consejos (Bootstrap Collapse) -->
                 <button class="btn btn-outline-light btn-sm" data-bs-toggle="collapse" data-bs-target="#tipsAhorro">
                     💡 Consejos rápidos
                 </button>
-
-                <!-- Contenedor donde se inyecta el contenido del consejo al abrir (opcional) -->
-                <div class="collapse mt-2">
-                    <div class="card card-body bg-dark text-light" id="contenidoConsejo">
-                        <!-- Aquí aparecerá el consejo -->
-                    </div>
-                </div>
             </div>
 
-            <!-- Mensaje colapsable con consejo por defecto -->
-            <div class="collapse mb-3" id="tipsAhorro">
+            <div class="collapse show mb-3" id="tipsAhorro">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     💸 Consejo: destina el 10% de cada ingreso a tu ahorro automático.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
             </div>
 
-            <!-- Formulario: ID usado por app.js para capturar submit -->
             <form id="form-transaccion" class="pt-2">
                 <div class="row g-4">
-                    <!-- Descripción -->
                     <div class="col-md-6">
                         <label for="descripcion" class="form-label fw-semibold text-light">Descripción</label>
                         <input type="text" class="form-control input-dark" id="descripcion"
                             placeholder="Ej: salario, café, alquiler..." required>
                     </div>
 
-                    <!-- Divisa -->
                     <div class="col-md-3">
                         <label for="divisa" class="form-label fw-semibold text-light">Divisa</label>
                         <select class="form-select select-dark" id="divisa" required>
@@ -128,7 +109,6 @@
                         </select>
                     </div>
 
-                    <!-- Monto -->
                     <div class="col-md-3">
                         <label for="monto" class="form-label fw-semibold text-light">Monto</label>
                         <div class="input-group">
@@ -140,7 +120,6 @@
                         </div>
                     </div>
 
-                    <!-- Tipo de movimiento -->
                     <div class="col-md-4">
                         <label for="tipo" class="form-label fw-semibold text-light">Tipo de movimiento</label>
                         <select class="form-select select-dark" id="tipo" required>
@@ -151,13 +130,11 @@
                         </select>
                     </div>
 
-                    <!-- Ahorro calculado (readonly) -->
                     <div class="col-md-2">
                         <label for="ahorro-calculado" class="form-label fw-semibold text-light">Ahorro (10%)</label>
                         <input type="text" id="ahorro-calculado" class="form-control input-dark" value="10 %" readonly>
                     </div>
 
-                    <!-- Botón enviar -->
                     <div class="col-md-8 d-grid align-self-end">
                         <button type="submit" class="btn btn-success py-2 fw-semibold">
                             <i class="bi bi-plus-circle me-2"></i> Añadir transacción
@@ -168,7 +145,6 @@
         </section>
 
         <!-- HISTORIAL DE MOVIMIENTOS -->
-        <!-- Tabla donde se listan las transacciones añadidas -->
         <section class="card glass-card border-0 shadow-sm p-4 tabla-movimientos">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-light mb-0">📜 Historial de movimientos</h4>
@@ -196,7 +172,6 @@
         </section>
 
         <!-- GRAFICO BALANCE -->
-        <!-- Canvas para el gráfico de balance (Chart.js lo inicializa) -->
         <div class="card mt-4">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">📊 Balance general</h5>
@@ -207,73 +182,38 @@
         </div>
 
         <!-- GRAFICO AHORRO -->
-        <!-- Canvas para el gráfico de ahorro (Chart.js lo inicializa) -->
         <section class="card glass-card border-0 shadow-sm p-4 mt-5 text-center">
             <h4 class="fw-bold text-success mb-4">📈 Progreso de Ahorro</h4>
             <canvas id="graficoAhorro" width="300" height="300"></canvas>
         </section>
     </main>
 
-    <!-- MODAL BOOTSTRAP -->
-    <!-- Modal estándar de Bootstrap (opcional). Esto no lo gestiona tu JS personalizado -->
-    <div class="modal fade" id="modalAhorro" tabindex="-1" aria-labelledby="modalAhorroLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-dark">
-                <div class="modal-header bg-warning bg-opacity-75">
-                    <h5 class="modal-title fw-bold" id="modalAhorroLabel">💡 Activar Ahorro Inteligente</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Cada vez que registres un ingreso, el sistema reservará automáticamente el 10% en tu ahorro.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning text-dark">Activar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CUSTOM (TU BOTÓN LO ABRE) -->
-    <!-- Modal personalizado controlado por app.js: abrir/cerrar con estilos propios -->
+    <!-- MODAL CUSTOM (INICIAL) -->
     <div id="modalAhorroConsejo" class="modal-consejo">
         <div class="modal-contenido animate-fade">
             <h5 class="text-warning mb-3">💡 Tu Ahorro del 10%</h5>
-
             <p><strong>1️⃣ Ahorra el 10 % de tus ingresos</strong><br>
                 Reservar una pequeña parte de tus ingresos de manera constante es el primer paso hacia la libertad
                 financiera.</p>
-
             <p><strong>2️⃣ La magia del interés compuesto</strong><br>
                 Si mantienes tu ahorro y lo dejas crecer a lo largo del tiempo, el interés compuesto hará que tu dinero
                 aumente significativamente. Pequeñas cantidades constantes generan grandes resultados. 🌱📈</p>
-
             <p><strong>3️⃣ Reinvierte y aprende</strong><br>
                 Solo ahorrar no es suficiente: aprender a reinvertir tu dinero en instrumentos sencillos y seguros, o
                 simular su crecimiento, permite que tu ahorro trabaje para ti. La educación financiera es clave para
                 maximizar el impacto de tu 10 %.</p>
-
-            <!-- Botón que cierra el modal custom (manejado por initSavingsModal en ui.js) -->
             <button class="btn btn-warning btn-sm" id="cerrarModal">Cerrar</button>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <!-- Pie de página con crédito y año -->
     <footer class="text-center py-3 bg-navbar text-secondary small border-top border-secondary border-opacity-25">
         © 2025 Crystian Ariel Carmona Trujillo — created with ❤️ y <code style="color:red;">code</code>.
     </footer>
 
     <!-- SCRIPTS -->
-    <!-- Chart.js: librería de gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Bootstrap JS: componentes y utilidades -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Entry point modular: tu app principal (type="module" para imports) -->
     <script type="module" src="assets/js/app.js"></script>
 </body>
 

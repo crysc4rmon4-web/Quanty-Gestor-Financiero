@@ -1,8 +1,7 @@
-// ==============================
 // motivation.js
-// ==============================
-// Este módulo devuelve frases motivacionales y consejos aleatorios.
-// No manipula el DOM directamente; app.js o ui.js se encargan de actualizarlo.
+// --------------------------------------------------
+// Módulo de frases y consejos motivacionales.
+// --------------------------------------------------
 
 const frases = [
   "Cada euro cuenta, pero la constancia vale más 💪",
@@ -14,7 +13,12 @@ const frases = [
   "No ahorres lo que te queda después de gastar; gasta lo que te quede después de ahorrar 💡",
   "Pequeños pasos crean grandes logros 🚀",
   "Domina tu dinero, no dejes que él te domine 🔥",
-  "Cada decisión cuenta. Haz que sume 📈"
+  "Cada decisión cuenta. Haz que sume 📈",
+  "Planifica hoy para sonreír mañana 😄",
+  "Las metas pequeñas sostenidas superan los impulsos grandes y pasajeros 🧭",
+  "Tus finanzas mejoran con hábitos, no con suerte 🍃",
+  "Un euro ahorrado es un euro que trabaja por ti 📊",
+  "Invierte en hábito: revisa tus gastos semanalmente 🗓️"
 ];
 
 const consejos = [
@@ -28,23 +32,41 @@ const consejos = [
   "💸 Consejo: Evita compras impulsivas y espera 24 horas antes de decidir.",
   "💸 Consejo: Establece metas financieras claras y realistas cada mes.",
   "💸 Consejo: Compara antes de gastar en productos grandes o servicios recurrentes.",
-  "💸 Consejo: Aprovecha el interés compuesto reinvirtiendo de manera constante.",
   "💸 Consejo: Crea un fondo de emergencia equivalente a 3-6 meses de gastos.",
+  "💸 Consejo: Aprovecha el interés compuesto reinvirtiendo de manera constante.",
   "💸 Consejo: Usa presupuestos flexibles, ajustándolos según tus ingresos.",
   "💸 Consejo: No pongas todos tus ahorros en un solo lugar, diversifica.",
-  "💸 Consejo: Aprende a leer y entender tus estados financieros personales.",
-  "💸 Consejo: Piensa en compras grandes como inversión en calidad, no solo gasto.",
-  "💸 Consejo: Revisa tus metas financieras trimestralmente y ajusta estrategias.",
-  "💸 Consejo: Evita endeudarte por consumo innecesario, prioriza tu libertad.",
-  "💸 Consejo: Pequeñas acciones diarias suman grandes resultados a largo plazo."
+  "💸 Consejo: Piensa en compras grandes como inversión en calidad, no solo gasto."
 ];
 
 export function getRandomPhrase() {
-  const idx = Math.floor(Math.random() * frases.length);
-  return frases[idx];
+  const i = Math.floor(Math.random() * frases.length);
+  return frases[i];
 }
 
 export function getRandomTip() {
-  const idx = Math.floor(Math.random() * consejos.length);
-  return consejos[idx];
+  const i = Math.floor(Math.random() * consejos.length);
+  return consejos[i];
 }
+
+// Utilidades opcionales para runtime (añadir/quitar)
+export function addPhrase(text) {
+  if (typeof text !== "string" || !text.trim()) return false;
+  frases.push(text.trim());
+  return true;
+}
+export function removePhrase(index) {
+  if (typeof index !== "number" || index < 0 || index >= frases.length) return null;
+  return frases.splice(index, 1)[0];
+}
+export function addTip(text) {
+  if (typeof text !== "string" || !text.trim()) return false;
+  consejos.push(text.trim());
+  return true;
+}
+export function removeTip(index) {
+  if (typeof index !== "number" || index < 0 || index >= consejos.length) return null;
+  return consejos.splice(index, 1)[0];
+}
+export function getAllPhrases() { return [...frases]; }
+export function getAllTips() { return [...consejos]; }

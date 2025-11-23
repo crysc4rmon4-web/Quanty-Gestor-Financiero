@@ -1,57 +1,108 @@
-import { addTransaction, calculateSavingFromIncome, getTotals } from './finance.js';
-import { renderTotals, renderTransactionRow, clearInputs, initSavingsModal, initTooltips } from './ui.js';
-import { getRandomPhrase, getRandomTip } from './motivation.js';
-import { initBalanceChart, initSavingsChart, updateBalanceChart, updateSavingsChart } from './charts.js';
+//--------------------------------------------------------------
+// app.js — Controlador principal de la aplicación
+//--------------------------------------------------------------
 
+// IMPORTS (modular)
+// ------------------------------
+import { 
+  addTransaction, 
+  calculateSavingFromIncome, 
+  getTotals 
+} from './finance.js';
+
+import { 
+  renderTotals, 
+  renderTransactionRow, 
+  clearInputs,
+  initSavingsModal,
+  initTooltipsAndCollapseClose
+} from './ui.js';
+
+import { 
+  getRandomPhrase, 
+  getRandomTip 
+} from './motivation.js';
+
+import { 
+  initBalanceChart, 
+  initSavingsChart, 
+  updateBalanceChart, 
+  updateSavingsChart 
+} from './charts.js';
+
+
+//--------------------------------------------------------------
+// ESPERA A QUE EL DOM CARGUE
+//--------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  // ------------------------------
-  // Referencias al DOM
-  // ------------------------------
-  const descripcionInput = document.getElementById("descripcion");
-  const montoInput = document.getElementById("monto");
-  const tipoInput = document.getElementById("tipo");
-  const divisaInput = document.getElementById("divisa");
-  const ahorroCalculado = document.getElementById("ahorro-calculado");
-  const historial = document.getElementById("tabla-movimientos");
 
-  const saldoTotalDOM = document.getElementById("saldo-total");
-  const ingresosTotalDOM = document.getElementById("ingresos-total");
-  const gastosTotalDOM = document.getElementById("gastos-total");
-  const ahorroTotalDOM = document.getElementById("ahorro-total");
+  //--------------------------------------------------------------
+  // REFERENCIAS AL DOM
+  //--------------------------------------------------------------
+  const descripcionInput   = document.getElementById("descripcion");
+  const montoInput         = document.getElementById("monto");
+  const tipoInput          = document.getElementById("tipo");
+  const divisaInput        = document.getElementById("divisa");
+  const ahorroCalculado    = document.getElementById("ahorro-calculado");
+  const historial          = document.getElementById("tabla-movimientos");
 
-  const fraseMotivacional = document.getElementById("frase-motivacional");
+  const saldoTotalDOM      = document.getElementById("saldo-total");
+  const ingresosTotalDOM   = document.getElementById("ingresos-total");
+  const gastosTotalDOM     = document.getElementById("gastos-total");
+  const ahorroTotalDOM     = document.getElementById("ahorro-total");
+
+  // Frase motivacional aleatoria
+  const fraseMotivacional  = document.getElementById("frase-motivacional");
   fraseMotivacional.textContent = getRandomPhrase();
 
-  // ------------------------------
-  // Inicializar gráficos
-  // ------------------------------
-  const graficoBalance = initBalanceChart(document.getElementById("graficoBalance").getContext("2d"));
-  const graficoAhorro = initSavingsChart(document.getElementById("graficoAhorro").getContext("2d"));
 
-  // ------------------------------
-  // Inputs y formulario
-  // ------------------------------
+  //--------------------------------------------------------------
+  // INICIALIZACIÓN DE GRÁFICOS
+  //--------------------------------------------------------------
+  const graficoBalance = initBalanceChart(
+    document.getElementById("graficoBalance").getContext("2d")
+  );
+
+  const graficoAhorro = initSavingsChart(
+    document.getElementById("graficoAhorro").getContext("2d")
+  );
+
+
+  //--------------------------------------------------------------
+  // AHORRO CALCULADO AUTOMÁTICO (10%)
+  //--------------------------------------------------------------
   montoInput.addEventListener("input", () => {
-    ahorroCalculado.value = calculateSavingFromIncome(parseFloat(montoInput.value) || 0).toFixed(2);
+    ahorroCalculado.value = calculateSavingFromIncome(
+      parseFloat(montoInput.value) || 0
+    ).toFixed(2);
   });
 
+
+  //--------------------------------------------------------------
+  // MANEJO DEL FORMULARIO DE TRANSACCIONES
+  //--------------------------------------------------------------
   document.getElementById("form-transaccion").addEventListener("submit", e => {
     e.preventDefault();
 
     const descripcion = descripcionInput.value.trim();
-    const monto = parseFloat(montoInput.value);
-    const tipo = tipoInput.value;
-    const divisa = divisaInput.value;
+    const monto       = parseFloat(montoInput.value);
+    const tipo        = tipoInput.value;
+    const divisa      = divisaInput.value;
 
+    // Validación básica de inputs
     if (!descripcion || isNaN(monto) || monto <= 0 || !tipo) {
       alert("Por favor, completa todos los campos correctamente.");
       return;
     }
 
-    // Lógica financiera
+    //--------------------------------------------------------------
+    // LÓGICA FINANCIERA
+    //--------------------------------------------------------------
     addTransaction(monto, tipo);
 
-    // Renderizar UI
+    //--------------------------------------------------------------
+    // RENDER DE LA UI
+    //--------------------------------------------------------------
     renderTransactionRow({ descripcion, monto, tipo, divisa }, historial);
     clearInputs([descripcionInput, montoInput, tipoInput, ahorroCalculado]);
 
@@ -61,16 +112,52 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSavingsChart(graficoAhorro, totals);
   });
 
-  // ------------------------------
-  // Inicializar tooltips y modales
-  // ------------------------------
-  initTooltips();
-  initSavingsModal(document.getElementById("btnAhorro"), document.getElementById("modalAhorroConsejo"), document.getElementById("cerrarModal"));
 
-  // ------------------------------
-  // Consejos aleatorios
-  // ------------------------------
+  //--------------------------------------------------------------
+  // INICIALIZAR TOOLTIP + CIERRE REAL DEL COLAPSE CONSEJO
+  //--------------------------------------------------------------
+  initTooltipsAndCollapseClose();
+
+
+  //--------------------------------------------------------------
+  // INICIALIZAR MODAL PERSONALIZADO DE AHORRO
+  //--------------------------------------------------------------
+  initSavingsModal(
+    document.getElementById("btnAhorro"),
+    document.getElementById("modalAhorroConsejo"),
+    document.getElementById("cerrarModal")
+  );
+
+  //--------------------------------------------------------------
+  // MODAL INICIAL — SE ABRE AL CARGAR LA APP
+  //--------------------------------------------------------------
+  const modal = document.getElementById('modalAhorroConsejo');
+  const cerrarBtn = document.getElementById('cerrarModal');
+
+  // Abrir automáticamente al cargar la app
+  modal.style.display = 'flex';
+
+  // Cerrar modal con botón
+  cerrarBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+  });
+
+  // Cerrar modal si el usuario hace click fuera del contenido
+  window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+          modal.style.display = 'none';
+      }
+  });
+
+
+  //--------------------------------------------------------------
+  // CONSEJO ALEATORIO AL ABRIR EL COLLAPSE
+  //--------------------------------------------------------------
   const collapseConsejo = document.querySelector("#tipsAhorro .alert");
   const btnConsejos = document.querySelector('button[data-bs-toggle="collapse"][data-bs-target="#tipsAhorro"]');
-  btnConsejos.addEventListener("click", () => { collapseConsejo.textContent = getRandomTip(); });
+
+  btnConsejos.addEventListener("click", () => { 
+    collapseConsejo.textContent = getRandomTip(); 
+  });
+
 });
