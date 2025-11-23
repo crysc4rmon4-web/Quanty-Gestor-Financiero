@@ -29,10 +29,6 @@ import {
   updateSavingsChart 
 } from './charts.js';
 
-
-//--------------------------------------------------------------
-// ESPERA A QUE EL DOM CARGUE
-//--------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
   //--------------------------------------------------------------
@@ -50,25 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const gastosTotalDOM     = document.getElementById("gastos-total");
   const ahorroTotalDOM     = document.getElementById("ahorro-total");
 
-  // Frase motivacional aleatoria
   const fraseMotivacional  = document.getElementById("frase-motivacional");
   fraseMotivacional.textContent = getRandomPhrase();
 
-
   //--------------------------------------------------------------
-  // INICIALIZACIÓN DE GRÁFICOS
+  // GRÁFICOS
   //--------------------------------------------------------------
   const graficoBalance = initBalanceChart(
     document.getElementById("graficoBalance").getContext("2d")
   );
-
   const graficoAhorro = initSavingsChart(
     document.getElementById("graficoAhorro").getContext("2d")
   );
 
-
   //--------------------------------------------------------------
-  // AHORRO CALCULADO AUTOMÁTICO (10%)
+  // AHORRO AUTOMÁTICO (10%)
   //--------------------------------------------------------------
   montoInput.addEventListener("input", () => {
     ahorroCalculado.value = calculateSavingFromIncome(
@@ -76,9 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ).toFixed(2);
   });
 
-
   //--------------------------------------------------------------
-  // MANEJO DEL FORMULARIO DE TRANSACCIONES
+  // FORMULARIO DE TRANSACCIONES
   //--------------------------------------------------------------
   document.getElementById("form-transaccion").addEventListener("submit", e => {
     e.preventDefault();
@@ -88,20 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const tipo        = tipoInput.value;
     const divisa      = divisaInput.value;
 
-    // Validación básica de inputs
     if (!descripcion || isNaN(monto) || monto <= 0 || !tipo) {
       alert("Por favor, completa todos los campos correctamente.");
       return;
     }
 
-    //--------------------------------------------------------------
-    // LÓGICA FINANCIERA
-    //--------------------------------------------------------------
     addTransaction(monto, tipo);
 
-    //--------------------------------------------------------------
-    // RENDER DE LA UI
-    //--------------------------------------------------------------
     renderTransactionRow({ descripcion, monto, tipo, divisa }, historial);
     clearInputs([descripcionInput, montoInput, tipoInput, ahorroCalculado]);
 
@@ -111,46 +95,19 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSavingsChart(graficoAhorro, totals);
   });
 
-
   //--------------------------------------------------------------
-  // INICIALIZAR TOOLTIP + CIERRE REAL DEL COLAPSE CONSEJO
+  // TOOLTIP + COLLAPSE
   //--------------------------------------------------------------
   initTooltipsAndCollapseClose();
 
-
   //--------------------------------------------------------------
-  // MODAL INICIAL — SE ABRE AL CARGAR LA APP
-  //--------------------------------------------------------------
-  const modalInicial = document.getElementById("modalAhorroInicial");
-  const cerrarModalInicial = document.getElementById("cerrarModalInicial");
-
-  // Abrir automáticamente al cargar la app
-  window.addEventListener("load", () => {
-    modalInicial.style.display = "flex";
-  });
-
-  // Cerrar modal con botón
-  cerrarModalInicial.addEventListener("click", () => {
-    modalInicial.style.display = "none";
-  });
-
-  // Cerrar modal si el usuario hace click fuera del contenido
-  modalInicial.addEventListener("click", (e) => {
-    if (e.target === modalInicial) {
-      modalInicial.style.display = "none";
-    }
-  });
-
-
-  //--------------------------------------------------------------
-  // INICIALIZAR MODAL PERSONALIZADO DE AHORRO (botón)
+  // MODAL PERSONALIZADO DE AHORRO (BOTÓN)
   //--------------------------------------------------------------
   initSavingsModal(
     document.getElementById("btnAhorro"),
     document.getElementById("modalAhorroConsejo"),
     document.getElementById("cerrarModal")
   );
-
 
   //--------------------------------------------------------------
   // CONSEJO ALEATORIO AL ABRIR EL COLLAPSE

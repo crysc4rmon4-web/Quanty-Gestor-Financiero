@@ -34,6 +34,10 @@ Este proyecto busca **practicar la integración de diseño, lógica y visualizac
 
 ## Levantar proyecto:
 
+Version de prueba en la raiz 
+python3 -m http.server 3000
+
+Version modular (en proceso)
 python3 -m http.server 3000 --directory src
 
 ---
